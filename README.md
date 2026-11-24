@@ -97,6 +97,6 @@ Author: Tanima Garg
 
 ![Job closely related to program, Ontario vs rest of Canada](survey/output/closely_related_by_region.png)
 
-**Limitation:** these are differences, not causes. Ontario's mix of fields of study (for example, more arts and humanities graduates) could explain part of the gap.
+**Limitation:** these are differences, not causes. Ontario's mix of fields of study could explain part of the gap.
 
 **Run it:** `Rscript survey/R/ngs_survey_analysis.R` (about one minute). Tables are saved to `survey/output/`.
