@@ -67,3 +67,36 @@ outputs/       charts
 - Fact book page: https://www.uottawa.ca/about-us/administration-services/institutional-research-planning/facts-figures/fact-book
 
 Author: Tanima Garg
+
+---
+
+## Part 2: National Graduates Survey (Class of 2020): survey-weighted analysis
+
+**Question:** Three years after graduating, how do Ontario graduates compare with graduates from the rest of Canada on employment, job relevance and student debt?
+
+**Data:** Statistics Canada public-use microdata file, National Graduates Survey, Class of 2020 (16,138 respondents, interviewed in 2023). The raw files are not stored here (the bootstrap file is 185 MB). Download `2020-CSV.zip` from Statistics Canada and unzip it into `survey/data/raw/`.
+
+**Method**
+- Estimates use the main survey weight (`WTPF`). Margins of error use the 1,000 bootstrap replicate weights (`WRPF1`–`WRPF1000`), as the NGS user guide specifies, in R's `survey` package.
+- Skip code 6 ("valid skip") and 9 ("not stated") are treated as missing, never as "no".
+- Each estimate gets a Statistics Canada quality grade (A–E) from its coefficient of variation.
+- Weighting matters: master's/doctorate graduates are 28.4% of respondents but only 13.3% of the graduate population once weighted.
+
+**Findings (95% ranges in brackets, all grade A)**
+
+| | Ontario | Rest of Canada |
+|---|---|---|
+| Bachelor's: job closely related to program | 50.3% (46.2–54.3) | 61.5% (59.6–63.3) |
+| College: job closely related to program | 50.9% (46.7–55.2) | 62.8% (60.8–64.8) |
+| Bachelor's: owed $25,000+ at graduation | 45.8% (41.3–50.2) | 36.7% (34.7–38.8) |
+| Master's/doctorate: owed $25,000+ | 50.3% (45.9–54.7) | 34.5% (32.2–36.7) |
+
+- A survey-weighted logistic regression confirms the bachelor's gap: graduates outside Ontario had 1.58 times the odds of a closely related job (p < 0.001).
+- No clear Ontario difference for master's/doctorate job relevance or for college debt (ranges overlap).
+- Employment three years out: college 87.0%, bachelor's 86.0%, master's/doctorate 90.6% (only master's/doctorate is clearly higher).
+
+![Job closely related to program, Ontario vs rest of Canada](survey/output/closely_related_by_region.png)
+
+**Limitation:** these are differences, not causes. Ontario's mix of fields of study (for example, more arts and humanities graduates) could explain part of the gap.
+
+**Run it:** `Rscript survey/R/ngs_survey_analysis.R` (about one minute). Tables are saved to `survey/output/`.
