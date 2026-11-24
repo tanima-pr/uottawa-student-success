@@ -1,0 +1,7 @@
+"level","region","pct","low","high","grade"
+"College","Ontario",20.7,16.2,25.1,"A"
+"Bachelor's","Ontario",45.8,41.3,50.2,"A"
+"Master's/Doctorate","Ontario",50.3,45.9,54.7,"A"
+"College","Rest of Canada",17.2,15.1,19.2,"A"
+"Bachelor's","Rest of Canada",36.7,34.7,38.8,"A"
+"Master's/Doctorate","Rest of Canada",34.5,32.2,36.7,"A"
