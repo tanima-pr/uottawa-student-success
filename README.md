@@ -1,6 +1,6 @@
-# uOttawa Student Success: Retention and Graduation Analysis (R)
+# uOttawa Student Success: Retention and Graduation Analysis (R and SAS)
 
-International first-year students at the University of Ottawa have consistently lower odds of returning for year 2 than domestic students (odds ratio 0.70 across 2014–2023), and the gap reached 11 percentage points for the 2023 entering class (78% vs 89%). Women graduate within six years at higher rates than men (76% vs 66% for the 2018 class), and six-year graduation is improving by about 4% in odds per entering year.
+International first-year students at the University of Ottawa have lower odds of returning for year 2 than domestic students (odds ratio 0.70 across 2014–2023; lower in 9 of 10 entering classes), and the gap reached 11 percentage points for the 2023 entering class (78% vs 89%). Women graduate within six years at higher rates than men (76% vs 66% for the 2018 class), and six-year graduation is improving by about 4% in odds per entering year.
 
 All figures come from uOttawa's public retention and graduation report (first-year, first-time, full-time, bachelor's degree-seeking students; entering classes 2014–2023).
 
@@ -8,7 +8,7 @@ All figures come from uOttawa's public retention and graduation report (first-ye
 
 | Question | Result | Evidence |
 |---|---|---|
-| Do international students return for year 2 less often? | Yes, every year. Odds of returning are about 30% lower than for domestic students. | Logistic regression, all 10 classes: OR 0.70 (95% CI 0.65–0.74), p < 0.001; still significant with a quasibinomial model (p = 0.0003) |
+| Do international students return for year 2 less often? | Yes, in 9 of 10 years (tied in 2018). Odds of returning are about 30% lower than for domestic students. | Logistic regression, all 10 classes: OR 0.70 (95% CI 0.65–0.74), p < 0.001; still significant with a quasibinomial model (p = 0.0003); replicated in SAS (OR 0.695) |
 | How large was the gap for the 2023 class? | 78.0% vs 89.0% returned; gap 8.3 to 13.7 points | Two-proportion test, p < 0.001 |
 | Has overall year-2 return changed since 2014? | No clear trend | Logistic regression, OR 0.99 per year, p = 0.12 |
 | Do women and men graduate at different rates? | Yes. 76.0% of women vs 66.0% of men graduated within 6 years (2018 class) | Two-proportion test, gap 7.5 to 12.5 points, p < 0.001 |
@@ -37,6 +37,7 @@ Six checks run before any analysis (`R/02_check_data.R`):
 3. **Describe:** cumulative graduation curves; year-2 return by domestic and international status.
 4. **Test:** two-proportion tests (`prop.test`) on counts rebuilt from rates × headcount.
 5. **Model:** binomial logistic regression (`glm`) on grouped counts with group and entering year as predictors. Because the year-2 model shows extra year-to-year variation (residual deviance 99.7 on 17 df), it is re-fit with a quasibinomial model as a robustness check.
+6. **Replicate in SAS:** `sas/model1_logistic.sas` re-runs the year-2 model with `PROC LOGISTIC` (events/trials syntax, plus `scale=pearson` for overdispersion). It gives the same odds ratio, 0.695 (95% CI 0.652–0.742). Tiny differences in the third decimal come from SAS and R rounding .5 differently when rebuilding student counts.
 
 ## Limitations
 
@@ -55,6 +56,7 @@ Six checks run before any analysis (`R/02_check_data.R`):
 data/raw/      source PDFs
 data/clean/    retention.csv (created by step 2)
 R/             01 read, 02 check, 03 charts, 04 tests, 05 regression
+sas/           model1_logistic.sas (SAS replication of the year-2 model)
 outputs/       charts
 ```
 
